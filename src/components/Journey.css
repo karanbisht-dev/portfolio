@@ -1,0 +1,95 @@
+.journey {
+  position: relative;
+  padding-left: 3.5rem;
+}
+
+/* Vertical progress spine */
+.journey-line {
+  position: absolute;
+  left: 1.35rem;
+  top: 0.5rem;
+  bottom: 0.5rem;
+  width: 2px;
+  background: linear-gradient(180deg, var(--accent), #7a4dff 60%, rgba(255, 255, 255, 0.1));
+}
+
+.level {
+  position: relative;
+  margin-bottom: 1.5rem;
+}
+
+.level-node {
+  position: absolute;
+  left: -3.5rem;
+  top: 0;
+  width: 2.7rem;
+  height: 2.7rem;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--card);
+  border: 2px solid var(--border);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  z-index: 1;
+}
+.level-num {
+  font-family: ui-monospace, "SFMono-Regular", Menlo, monospace;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--muted);
+}
+
+.level.current .level-node {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px var(--accent-soft), 0 0 22px rgba(214, 65, 63, 0.5);
+  animation: pulse 2.2s ease-in-out infinite;
+}
+.level.current .level-num { color: #fff; }
+
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 0 4px var(--accent-soft), 0 0 18px rgba(214, 65, 63, 0.4); }
+  50% { box-shadow: 0 0 0 7px transparent, 0 0 30px rgba(214, 65, 63, 0.7); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .level.current .level-node { animation: none; }
+}
+
+.level-body {
+  background: var(--card);
+  border: 1px solid var(--border);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border-radius: 14px;
+  padding: 1rem 1.25rem;
+  transition: border-color 0.25s, transform 0.25s;
+}
+.level-body:hover {
+  border-color: var(--border-hover);
+  transform: translateX(4px);
+}
+.level.current .level-body { border-color: var(--accent); }
+
+.level-body h3 {
+  margin: 0 0 0.35rem;
+  font-size: 1.02rem;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+.level-badge {
+  font-family: ui-monospace, "SFMono-Regular", Menlo, monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  border-radius: 999px;
+  padding: 0.12rem 0.5rem;
+}
+.level-body p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}

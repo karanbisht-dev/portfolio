@@ -1,0 +1,11 @@
+#root {
+  width: 100%;
+  background-color: transparent;
+}
+
+.page {
+  position: relative;
+  z-index: 1; /* content sits above the fixed background layers */
+  width: 100%;
+  overflow-x: clip;
+}

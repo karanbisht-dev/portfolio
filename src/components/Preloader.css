@@ -1,0 +1,60 @@
+.preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: #050506;
+  display: grid;
+  place-items: center;
+  transition: transform 0.9s cubic-bezier(0.76, 0, 0.24, 1), opacity 0.6s ease;
+  will-change: transform;
+}
+.preloader.done {
+  transform: translateY(-100%);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.preloader-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  transition: opacity 0.5s ease;
+}
+.preloader.done .preloader-inner {
+  opacity: 0;
+}
+
+.pre-label {
+  font-family: ui-monospace, "SFMono-Regular", Menlo, monospace;
+  font-size: 0.8rem;
+  letter-spacing: 0.35em;
+  color: var(--muted);
+}
+.pre-count {
+  font-size: clamp(4rem, 14vw, 9rem);
+  font-weight: 800;
+  line-height: 1;
+}
+.pre-count em {
+  font-style: normal;
+  font-size: 0.4em;
+  vertical-align: super;
+  margin-left: 0.1em;
+}
+.pre-name {
+  font-family: ui-monospace, "SFMono-Regular", Menlo, monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.3em;
+  color: var(--muted);
+}
+
+.pre-bar {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 2px;
+  transform-origin: 0 50%;
+  background: linear-gradient(90deg, #d6413f, #ff8a5c, #5a3cc8);
+}
