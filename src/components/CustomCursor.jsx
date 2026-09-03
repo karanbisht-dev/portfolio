@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react'
 import './CustomCursor.css'
 
-const INTERACTIVE = 'a, button, .social, .stat, .project-card, .skill-card, .resume-btn'
+const INTERACTIVE = 'a, button, .social, .stat, .project-card, .skill-card, .resume-btn, .pcard'
 
 // A precise dot plus a lagging ring that grows over interactive elements.
 export default function CustomCursor() {

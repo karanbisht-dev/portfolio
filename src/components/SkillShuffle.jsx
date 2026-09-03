@@ -84,8 +84,22 @@ function Corner({ card, className }) {
 export default function SkillShuffle() {
   const [order, setOrder] = useState(CARDS.map((_, i) => i))
   const [busy, setBusy] = useState(false)
+  // Pointer devices flip on hover (CSS); touch devices flip on tap (this set).
+  const [canHover] = useState(
+    () => typeof window !== 'undefined' && window.matchMedia('(hover: hover)').matches
+  )
+  const [flipped, setFlipped] = useState(() => new Set())
   const refs = useRef({})
   const prevRects = useRef(null)
+
+  const toggleFlip = (idx) => {
+    setFlipped((prev) => {
+      const next = new Set(prev)
+      if (next.has(idx)) next.delete(idx)
+      else next.add(idx)
+      return next
+    })
+  }
 
   const doShuffle = () => {
     if (busy) return
@@ -140,18 +154,32 @@ export default function SkillShuffle() {
           const c = CARDS[idx]
           return (
             <div
-              className="pcard"
+              className={`pcard ${flipped.has(idx) ? 'flipped' : ''}`}
               data-tone={c.tone}
               key={c.name}
               ref={(el) => { refs.current[idx] = el }}
+              onClick={canHover ? undefined : () => toggleFlip(idx)}
             >
-              <Corner card={c} className="tl" />
-              <div className="pcard-face">
-                <Accessory tone={c.tone} />
-                <img src={avatar} alt="" />
+              <div className="pcard-inner">
+                {/* Front — the skill face */}
+                <div className="pcard-side pcard-front">
+                  <Corner card={c} className="tl" />
+                  <div className="pcard-face">
+                    <Accessory tone={c.tone} />
+                    <img src={avatar} alt="" />
+                  </div>
+                  <span className="pcard-name">{c.name}</span>
+                  <Corner card={c} className="br" />
+                </div>
+                {/* Back — holographic foil that comes alive when flipped */}
+                <div className="pcard-side pcard-back">
+                  <div className="pcard-back-holo" />
+                  <div className="pcard-back-art">
+                    <span className="pcard-back-emblem">KB</span>
+                  </div>
+                  <div className="pcard-back-shine" />
+                </div>
               </div>
-              <span className="pcard-name">{c.name}</span>
-              <Corner card={c} className="br" />
             </div>
           )
         })}

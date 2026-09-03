@@ -58,7 +58,8 @@ export default function NavBar() {
           href="/Karan_Bisht_Resume.pdf"
           target="_blank"
           rel="noopener noreferrer"
-          className="nav-resume"
+          className="nav-resume magnetic"
+          data-magnetic="0.3"
           onClick={() => setOpen(false)}
         >
           Résumé

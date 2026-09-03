@@ -1,5 +1,6 @@
 import './Hero.css'
 import avatar from '../assets/avatar.png'
+import Scramble from './Scramble'
 
 const socials = [
   {
@@ -35,8 +36,13 @@ const socials = [
 export default function Hero() {
   return (
     <section className="hero" id="home">
-      <span className="hero-eyebrow" data-reveal="up">
-        [ SOFTWARE ENGINEER — BACKEND · CLOUD · AI ]
+      <span className="hero-status" data-reveal="up">
+        <span className="hero-status-dot" />
+        Available for new opportunities
+      </span>
+
+      <span className="hero-eyebrow" data-reveal="up" style={{ '--d': '0.06s' }}>
+        <Scramble text="[ SOFTWARE ENGINEER — BACKEND · CLOUD · AI ]" />
       </span>
 
       <div className="hero-avatar" data-reveal="zoom">
@@ -44,24 +50,26 @@ export default function Hero() {
       </div>
 
       <h1 className="hero-name">
-        <span className="line" data-reveal="up" style={{ '--d': '0.05s' }}>
-          <span className="grad-text">KARAN</span>
+        {/* The mask (not the clipped line) carries data-reveal, so the
+            IntersectionObserver isn't fooled by the overflow:hidden clip. */}
+        <span className="mask" data-reveal="" style={{ '--d': '0.15s' }}>
+          <span className="line grad-text">KARAN</span>
         </span>
-        <span className="line outline" data-reveal="up" style={{ '--d': '0.14s' }}>
-          BISHT
+        <span className="mask" data-reveal="" style={{ '--d': '0.28s' }}>
+          <span className="line outline">BISHT</span>
         </span>
       </h1>
 
-      <p className="hero-tagline" data-reveal="up" style={{ '--d': '0.24s' }}>
+      <p className="hero-tagline" data-reveal="blur" style={{ '--d': '0.42s' }}>
         A curious developer who loves building good things — clean code, useful
         products and the occasional <strong>AI</strong> experiment. Always
         learning, and happiest turning a rough idea into something real.
       </p>
 
-      <div className="hero-actions" data-reveal="up" style={{ '--d': '0.32s' }}>
-        <a className="btn primary" href="#projects">View Work</a>
+      <div className="hero-actions" data-reveal="up" style={{ '--d': '0.52s' }}>
+        <a className="btn primary magnetic" href="#projects">View Work</a>
         <a
-          className="btn ghost"
+          className="btn ghost magnetic"
           href="/Karan_Bisht_Resume.pdf"
           target="_blank"
           rel="noopener noreferrer"
@@ -70,7 +78,7 @@ export default function Hero() {
         </a>
       </div>
 
-      <div className="hero-socials" data-reveal="up" style={{ '--d': '0.4s' }}>
+      <div className="hero-socials" data-reveal="up" style={{ '--d': '0.6s' }}>
         {socials.map((s) => (
           <a
             key={s.label}
@@ -79,7 +87,8 @@ export default function Hero() {
             rel="noopener noreferrer"
             aria-label={s.label}
             title={s.label}
-            className="social"
+            className="social magnetic"
+            data-magnetic="0.5"
           >
             <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true">
               {s.icon}

@@ -12,7 +12,7 @@ const levels = [
 export default function Journey() {
   return (
     <div className="journey">
-      <div className="journey-line" data-reveal="up" />
+      <div className="journey-line" data-reveal="" />
       {levels.map((l, i) => (
         <div
           className={`level ${l.current ? 'current' : ''}`}
@@ -23,7 +23,7 @@ export default function Journey() {
           <div className="level-node">
             <span className="level-num">{l.lvl}</span>
           </div>
-          <div className="level-body">
+          <div className="level-body glow-card">
             <h3>
               {l.title}
               {l.current && <span className="level-badge">CURRENT</span>}

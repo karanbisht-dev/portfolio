@@ -6,6 +6,7 @@ import Preloader from './components/Preloader'
 import CustomCursor from './components/CustomCursor'
 import NavBar from './components/NavBar'
 import Hero from './components/Hero'
+import Marquee from './components/Marquee'
 import MainContent from './components/MainContent'
 
 // The 3D scene (three.js) is code-split so it never blocks first paint.
@@ -13,6 +14,9 @@ const Scene3D = lazy(() => import('./components/Scene3D'))
 
 function App() {
   const [use3D, setUse3D] = useState(false)
+  // Gate entrance reveals until the preloader lifts, so the hero animates
+  // *in front of* the user instead of playing out behind the curtain.
+  const [ready, setReady] = useState(false)
 
   useEffect(() => {
     // Enable the WebGL scene only on hover-capable devices that don't ask for
@@ -23,13 +27,21 @@ function App() {
   }, [])
 
   // Reveal-on-scroll for every [data-reveal] element (slide / rotate / zoom in).
+  // Held back until `ready` so above-the-fold content reveals as the curtain lifts.
   useEffect(() => {
+    if (!ready) return
     const els = Array.from(document.querySelectorAll('[data-reveal]'))
     const io = new IntersectionObserver(
       (entries) => {
         entries.forEach((e) => {
           if (e.isIntersecting) {
             e.target.classList.add('in')
+            // Drop the compositor hint once the reveal has played (perf).
+            e.target.addEventListener(
+              'transitionend',
+              () => { e.target.style.willChange = 'auto' },
+              { once: true }
+            )
             io.unobserve(e.target)
           }
         })
@@ -38,7 +50,7 @@ function App() {
     )
     els.forEach((el) => io.observe(el))
     return () => io.disconnect()
-  }, [])
+  }, [ready])
 
   // 3D mouse-tilt for .tilt cards (desktop only).
   useEffect(() => {
@@ -93,9 +105,59 @@ function App() {
     }
   }, [])
 
+  // Magnetic hover for .magnetic elements — buttons/links gently pull toward
+  // the cursor and spring back on leave (a signature creative-web micro-interaction).
+  useEffect(() => {
+    if (!window.matchMedia('(hover: hover)').matches) return
+    const els = Array.from(document.querySelectorAll('.magnetic'))
+    const cleanups = els.map((el) => {
+      const strength = parseFloat(el.dataset.magnetic) || 0.4
+      const move = (e) => {
+        const r = el.getBoundingClientRect()
+        const mx = e.clientX - (r.left + r.width / 2)
+        const my = e.clientY - (r.top + r.height / 2)
+        el.style.transform = `translate(${mx * strength}px, ${my * strength}px)`
+      }
+      const leave = () => { el.style.transform = '' }
+      el.addEventListener('mousemove', move)
+      el.addEventListener('mouseleave', leave)
+      return () => {
+        el.removeEventListener('mousemove', move)
+        el.removeEventListener('mouseleave', leave)
+      }
+    })
+    return () => cleanups.forEach((fn) => fn())
+  }, [])
+
+  // Cursor-tracking spotlight for .glow-card surfaces (one delegated listener).
+  useEffect(() => {
+    if (!window.matchMedia('(hover: hover)').matches) return
+    let raf = 0
+    let lx = 0
+    let ly = 0
+    const apply = () => {
+      raf = 0
+      const el = document.elementFromPoint(lx, ly)?.closest('.glow-card')
+      if (!el) return
+      const r = el.getBoundingClientRect()
+      el.style.setProperty('--mx', `${lx - r.left}px`)
+      el.style.setProperty('--my', `${ly - r.top}px`)
+    }
+    const onMove = (e) => {
+      lx = e.clientX
+      ly = e.clientY
+      if (!raf) raf = requestAnimationFrame(apply)
+    }
+    window.addEventListener('pointermove', onMove, { passive: true })
+    return () => {
+      window.removeEventListener('pointermove', onMove)
+      cancelAnimationFrame(raf)
+    }
+  }, [])
+
   return (
     <>
-      <Preloader />
+      <Preloader onComplete={() => setReady(true)} />
       <CustomCursor />
       <NavBar />
       {/* Rich animated CSS backdrop — always on, guaranteed visible */}
@@ -109,6 +171,7 @@ function App() {
       <ScrollProgress />
       <div className="page">
         <Hero />
+        <Marquee />
         <MainContent />
       </div>
     </>

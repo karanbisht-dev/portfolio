@@ -2,7 +2,9 @@ import { useEffect, useState } from 'react'
 import './Preloader.css'
 
 // Noomo-style entrance: a 0→100% counter that slides away to reveal the site.
-export default function Preloader() {
+// Calls onComplete the moment the curtain starts lifting, so the page can begin
+// its entrance reveals in sync.
+export default function Preloader({ onComplete }) {
   const [count, setCount] = useState(0)
   const [done, setDone] = useState(false)
   const [hidden, setHidden] = useState(false)
@@ -10,7 +12,9 @@ export default function Preloader() {
   useEffect(() => {
     let raf
     const start = performance.now()
-    const duration = 1900
+    // Keep it snappy for reduced-motion users — just a brief beat, then reveal.
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    const duration = reduced ? 400 : 1900
     const tick = (t) => {
       const p = Math.min((t - start) / duration, 1)
       const eased = 1 - Math.pow(1 - p, 3) // easeOutCubic
@@ -25,6 +29,11 @@ export default function Preloader() {
     raf = requestAnimationFrame(tick)
     return () => cancelAnimationFrame(raf)
   }, [])
+
+  // Fire once, as the curtain begins to lift.
+  useEffect(() => {
+    if (done) onComplete?.()
+  }, [done, onComplete])
 
   if (hidden) return null
 

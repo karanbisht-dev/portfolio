@@ -1,6 +1,8 @@
 import './MainContent.css'
 import SkillShuffle from './SkillShuffle'
 import Journey from './Journey'
+import CountUp from './CountUp'
+import Scramble from './Scramble'
 
 const stats = [
   { value: '8.20', label: 'CGPA / 10' },
@@ -56,11 +58,11 @@ const certifications = [
   'NPTEL — Cloud Computing · NCC B Certificate',
 ]
 
-function Section({ id, num, title, children }) {
+function Section({ id, title, children }) {
   return (
     <section id={id} className="section">
       <div className="section-head">
-        <h2 className="section-title" data-reveal="up">{title}</h2>
+        <h2 className="section-title" data-reveal="up"><Scramble text={title} /></h2>
       </div>
       {children}
     </section>
@@ -83,8 +85,8 @@ export default function MainContent() {
 
         <div className="stats">
           {stats.map((s, i) => (
-            <div className="stat tilt" data-reveal="zoom" style={{ '--d': `${i * 0.08}s` }} key={s.label}>
-              <span className="stat-value grad-text">{s.value}</span>
+            <div className="stat tilt glow-card" data-reveal="zoom" style={{ '--d': `${i * 0.08}s` }} key={s.label}>
+              <CountUp className="stat-value grad-text" value={s.value} />
               <span className="stat-label">{s.label}</span>
             </div>
           ))}
@@ -99,7 +101,7 @@ export default function MainContent() {
         <div className="timeline">
           {experience.map((e, i) => (
             <div
-              className="timeline-item tilt"
+              className="timeline-item tilt glow-card"
               data-reveal={i % 2 === 0 ? 'left' : 'right'}
               key={e.org}
             >
@@ -119,11 +121,11 @@ export default function MainContent() {
         <SkillShuffle />
       </Section>
 
-      <Section id="projects" num="04" title="Projects">
+      <Section id="projects" num="05" title="Projects">
         <div className="projects">
           {projects.map((p) => (
             <a
-              className="project-card tilt"
+              className="project-card tilt glow-card"
               data-reveal="rot"
               href={p.link}
               target="_blank"
@@ -145,8 +147,8 @@ export default function MainContent() {
         </div>
       </Section>
 
-      <Section id="education" num="05" title="Education">
-        <div className="timeline-item tilt" data-reveal="up">
+      <Section id="education" num="06" title="Education">
+        <div className="timeline-item tilt glow-card" data-reveal="up">
           <div className="timeline-head">
             <h3>B.Tech, Computer Science &amp; Engineering</h3>
             <span className="period">Aug 2023 – May 2027 (Expected)</span>
@@ -161,29 +163,36 @@ export default function MainContent() {
         </div>
       </Section>
 
-      <Section id="certifications" num="06" title="Achievements & Certifications">
+      <Section id="certifications" num="07" title="Achievements & Certifications">
         <ul className="cert-list">
           {certifications.map((c, i) => (
-            <li data-reveal="up" style={{ '--d': `${i * 0.06}s` }} key={c}>{c}</li>
+            <li className="glow-card" data-reveal="up" style={{ '--d': `${i * 0.06}s` }} key={c}>{c}</li>
           ))}
         </ul>
       </Section>
 
-      <Section id="contact" num="07" title="Contact">
+      <Section id="contact" num="08" title="Contact">
         <p className="prose big" data-reveal="up">
           I&apos;m open to software engineering roles, internships and interesting
           collaborations. The fastest way to reach me:
         </p>
         <div className="contact-links" data-reveal="up" style={{ '--d': '0.1s' }}>
-          <a href="mailto:karan.bisht.work@gmail.com">karan.bisht.work@gmail.com</a>
-          <a href="tel:+918392898312">+91 83928 98312</a>
-          <a href="https://linkedin.com/in/karanbisht-cse" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-          <a href="https://github.com/karanbisht-dev" target="_blank" rel="noopener noreferrer">GitHub</a>
+          <a className="magnetic glow-card" data-magnetic="0.25" href="mailto:karan.bisht.work@gmail.com">karan.bisht.work@gmail.com</a>
+          <a className="magnetic glow-card" data-magnetic="0.25" href="tel:+918392898312">+91 83928 98312</a>
+          <a className="magnetic glow-card" data-magnetic="0.25" href="https://linkedin.com/in/karanbisht-cse" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+          <a className="magnetic glow-card" data-magnetic="0.25" href="https://github.com/karanbisht-dev" target="_blank" rel="noopener noreferrer">GitHub</a>
         </div>
       </Section>
 
       <footer className="footer">
-        <p>© {new Date().getFullYear()} Karan Bisht · Built with React, Three.js &amp; Vite</p>
+        <a className="footer-cta magnetic" data-magnetic="0.2" href="mailto:karan.bisht.work@gmail.com">
+          <span className="footer-cta-label">Let&apos;s build something</span>
+          <span className="footer-cta-big grad-text">GET IN TOUCH →</span>
+        </a>
+        <div className="footer-bottom">
+          <span>© {new Date().getFullYear()} Karan Bisht</span>
+          <span>Built with React, Three.js &amp; Vite</span>
+        </div>
       </footer>
     </main>
   )

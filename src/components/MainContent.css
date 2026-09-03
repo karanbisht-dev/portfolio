@@ -18,22 +18,6 @@
   margin-bottom: 2.5rem;
 }
 
-/* Big faded editorial index number that drifts on scroll */
-.section-num {
-  position: absolute;
-  top: -3.5rem;
-  left: -0.5rem;
-  font-size: clamp(6rem, 16vw, 13rem);
-  font-weight: 800;
-  line-height: 1;
-  color: rgba(255, 255, 255, 0.035);
-  letter-spacing: -0.04em;
-  pointer-events: none;
-  z-index: 0;
-  transform: translateY(var(--py, 0));
-  user-select: none;
-}
-
 .section-title {
   position: relative;
   z-index: 1;
@@ -44,11 +28,21 @@
   align-items: center;
   gap: 0.8rem;
 }
+/* Accent line that draws itself in when the title reveals */
 .section-title::before {
   content: '';
   width: 2.4rem;
   height: 2px;
   background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.15s;
+}
+.section-title.in::before {
+  transform: scaleX(1);
+}
+@media (prefers-reduced-motion: reduce) {
+  .section-title::before { transform: none; transition: none; }
 }
 
 /* ---------- Prose ---------- */
@@ -256,12 +250,37 @@
 
 /* ---------- Footer ---------- */
 .footer {
-  margin-top: 3rem;
-  padding-top: 1.5rem;
+  margin-top: 5rem;
+  padding-top: 2.5rem;
   border-top: 1px solid var(--border);
+}
+.footer-cta {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  color: inherit;
+}
+.footer-cta-label {
+  font-family: ui-monospace, "SFMono-Regular", Menlo, monospace;
+  font-size: 0.78rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.footer-cta-big {
+  font-size: clamp(2.2rem, 8vw, 5.5rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 2.5rem;
   color: var(--muted);
   font-size: 0.82rem;
-  text-align: center;
 }
 
 @media (max-width: 560px) {

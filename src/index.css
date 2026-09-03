@@ -47,6 +47,7 @@ body {
   opacity: 0;
   transition:
     opacity 0.9s ease,
+    filter 0.9s ease,
     translate 0.9s cubic-bezier(0.22, 1, 0.36, 1),
     scale 0.9s cubic-bezier(0.22, 1, 0.36, 1),
     rotate 0.9s cubic-bezier(0.22, 1, 0.36, 1);
@@ -58,11 +59,16 @@ body {
 [data-reveal='right'] { translate: 90px 0; }
 [data-reveal='zoom'] { scale: 0.85; }
 [data-reveal='rot'] { translate: 0 90px; rotate: x 22deg; }
+/* Masked line reveal — the parent must clip (overflow: hidden) so the text
+   rises up from behind an invisible edge. Used for the hero name. */
+[data-reveal='rise'] { translate: 0 120%; }
+[data-reveal='blur'] { translate: 0 40px; filter: blur(14px); }
 [data-reveal].in {
   opacity: 1;
   translate: 0 0;
   scale: 1;
   rotate: none;
+  filter: none;
 }
 @media (prefers-reduced-motion: reduce) {
   [data-reveal] {
@@ -70,6 +76,7 @@ body {
     translate: none;
     scale: none;
     rotate: none;
+    filter: none;
     transition: none;
   }
 }
@@ -80,6 +87,33 @@ body {
   transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
     border-color 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
   will-change: transform;
+}
+
+/* Interactive spotlight — a soft light that tracks the cursor across every
+   glass card. --mx/--my are set per-card in JS; it sits above the card's
+   background but below its content (isolate + negative z-index). */
+.glow-card {
+  position: relative;
+  isolation: isolate;
+}
+.glow-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(
+    220px circle at var(--mx, 50%) var(--my, 50%),
+    rgba(255, 138, 92, 0.18),
+    transparent 60%
+  );
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+.glow-card:hover::after { opacity: 1; }
+@media (hover: none) {
+  .glow-card::after { display: none; }
 }
 
 /* Animated gradient text (used for the hero name) */

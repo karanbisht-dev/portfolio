@@ -1,6 +1,6 @@
 import { Suspense, useRef } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
-import { Float, MeshDistortMaterial, Stars } from '@react-three/drei'
+import { Float, MeshDistortMaterial, Sparkles, Stars } from '@react-three/drei'
 import './Scene3D.css'
 
 // Camera gently follows the pointer and pushes back as you scroll.
@@ -18,10 +18,14 @@ function Rig() {
 }
 
 // A glowing, morphing core with a rotating wireframe shell around it.
+// It swells slightly and glows hotter as you scroll down the page.
 function Core() {
+  const group = useRef()
   const solid = useRef()
   const wire = useRef()
+  const mat = useRef()
   useFrame((_, delta) => {
+    const scroll = Math.min(window.scrollY / window.innerHeight, 2)
     if (solid.current) {
       solid.current.rotation.x += delta * 0.08
       solid.current.rotation.y += delta * 0.12
@@ -31,13 +35,23 @@ function Core() {
       wire.current.rotation.y -= delta * 0.06
       wire.current.rotation.x += delta * 0.03
     }
+    if (group.current) {
+      // Ease the whole cluster toward a scroll-driven size.
+      const target = 1 + scroll * 0.14
+      group.current.scale.x += (target - group.current.scale.x) * 0.05
+      group.current.scale.y = group.current.scale.z = group.current.scale.x
+    }
+    if (mat.current) {
+      mat.current.emissiveIntensity = 0.75 + scroll * 0.5
+    }
   })
   return (
     <Float speed={1.3} rotationIntensity={0.7} floatIntensity={1.4}>
-      <group position={[3.1, 0.9, -1.4]}>
+      <group ref={group} position={[3.1, 0.9, -1.4]}>
         <mesh ref={solid} scale={2.2}>
           <icosahedronGeometry args={[1, 20]} />
           <MeshDistortMaterial
+            ref={mat}
             color="#ff5436"
             emissive="#ff3b24"
             emissiveIntensity={0.75}
@@ -51,6 +65,8 @@ function Core() {
           <icosahedronGeometry args={[1, 3]} />
           <meshBasicMaterial color="#ff8a5c" wireframe transparent opacity={0.18} />
         </mesh>
+        {/* Floating glints drifting around the core for extra depth */}
+        <Sparkles count={34} scale={5.5} size={4} speed={0.4} opacity={0.7} color="#ffb08a" />
       </group>
     </Float>
   )

@@ -10,6 +10,15 @@
   padding: 0.9rem clamp(1rem, 4vw, 2.5rem);
   transition: background 0.3s ease, border-color 0.3s ease, backdrop-filter 0.3s ease;
   border-bottom: 1px solid transparent;
+  /* Drops in just as the preloader curtain lifts */
+  animation: navDrop 0.9s cubic-bezier(0.22, 1, 0.36, 1) 2.5s both;
+}
+@keyframes navDrop {
+  from { transform: translateY(-120%); opacity: 0; }
+  to   { transform: translateY(0);     opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .nav { animation: none; }
 }
 .nav.scrolled {
   background: rgba(8, 8, 12, 0.6);

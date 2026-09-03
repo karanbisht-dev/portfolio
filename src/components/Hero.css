@@ -13,6 +13,40 @@
   gap: 1.4rem;
 }
 
+/* Pulsing "available" indicator */
+.hero-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-family: ui-monospace, "SFMono-Regular", Menlo, monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.7);
+  padding: 0.4rem 0.9rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--card);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+}
+.hero-status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #33d17a;
+  box-shadow: 0 0 0 0 rgba(51, 209, 122, 0.7);
+  animation: statusPulse 2s ease-out infinite;
+}
+@keyframes statusPulse {
+  0%   { box-shadow: 0 0 0 0 rgba(51, 209, 122, 0.7); }
+  70%  { box-shadow: 0 0 0 9px rgba(51, 209, 122, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(51, 209, 122, 0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-status-dot { animation: none; }
+}
+
 .hero-eyebrow {
   font-family: ui-monospace, "SFMono-Regular", Menlo, monospace;
   font-size: 0.78rem;
@@ -57,9 +91,26 @@
   flex-direction: column;
   align-items: center;
 }
+/* Each line lives inside a clipping mask so it can rise up from behind the
+   edge. Top padding gives the caps headroom so the overflow clip never shaves
+   their tops. The mask carries the reveal; the line rises when the mask is in. */
+.hero-name .mask {
+  display: block;
+  overflow: hidden;
+  padding-top: 0.12em;
+}
 .hero-name .line {
   font-size: clamp(3.5rem, 15vw, 11rem);
   display: block;
+  translate: 0 120%;
+  transition: translate 0.95s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--d, 0s);
+}
+.hero-name .mask.in .line {
+  translate: 0 0;
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-name .line { translate: none; transition: none; }
 }
 /* Outlined second word for editorial contrast */
 .hero-name .outline {
