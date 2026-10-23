@@ -11,7 +11,7 @@ const socials = [
     ),
   },
   {
-    href: 'https://linkedin.com/in/karanbisht-cse',
+    href: 'https://www.linkedin.com/in/karanbisht-cse',
     label: 'LinkedIn',
     icon: (
       <path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28ZM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13ZM7.12 20.45H3.55V9h3.57v11.45ZM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0Z" />
@@ -22,13 +22,6 @@ const socials = [
     label: 'Email',
     icon: (
       <path d="M2 4h20c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H2c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2Zm10 7L2.4 5.2C2.15 5.05 2 5.3 2 5.6V6l10 6 10-6v-.4c0-.3-.15-.55-.4-.4L12 11Z" />
-    ),
-  },
-  {
-    href: 'https://leetcode.com/u/karanbisht/',
-    label: 'LeetCode',
-    icon: (
-      <path d="M8.7 6.3a1 1 0 0 0-1.4 1.4L11.58 12 7.3 16.3a1 1 0 1 0 1.4 1.4l5-5a1 1 0 0 0 0-1.4l-5-5ZM14 16.5a1 1 0 1 0 0 2h4a1 1 0 1 0 0-2h-4Z" />
     ),
   },
 ]
@@ -42,7 +35,7 @@ export default function Hero() {
       </span>
 
       <span className="hero-eyebrow" data-reveal="up" style={{ '--d': '0.06s' }}>
-        <Scramble text="[ SOFTWARE ENGINEER — BACKEND · CLOUD · AI ]" />
+        <Scramble text="[ SOFTWARE DEVELOPER ]" />
       </span>
 
       <div className="hero-avatar" data-reveal="zoom">
@@ -61,21 +54,13 @@ export default function Hero() {
       </h1>
 
       <p className="hero-tagline" data-reveal="blur" style={{ '--d': '0.42s' }}>
-        A curious developer who loves building good things — clean code, useful
-        products and the occasional <strong>AI</strong> experiment. Always
-        learning, and happiest turning a rough idea into something real.
+        Final-year B.Tech CSE student with two internships applying
+        <strong> LLMs</strong> to real engineering problems at Accenture and IIT
+        Patna. Interested in software development, AI/ML and test automation.
       </p>
 
       <div className="hero-actions" data-reveal="up" style={{ '--d': '0.52s' }}>
         <a className="btn primary magnetic" href="#projects">View Work</a>
-        <a
-          className="btn ghost magnetic"
-          href="/Karan_Bisht_Resume.pdf"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Download Résumé
-        </a>
       </div>
 
       <div className="hero-socials" data-reveal="up" style={{ '--d': '0.6s' }}>

@@ -1,7 +1,6 @@
 # Karan Bisht — Portfolio
 
-A fast, single-page developer portfolio built with **React 19 + Vite** — the same
-stack and architecture used by the reference site (anubhavchoubey.com). It compiles
+A fast, single-page developer portfolio built with **React 19 + Vite**. It compiles
 to static files and is meant to be served from a CDN (Vercel), so it stays fast with
 no lag no matter how many people visit at once.
 
@@ -23,7 +22,7 @@ npm run build     # outputs static site to dist/
 npm run preview   # preview the production build locally
 ```
 
-## Deploy to Vercel (recommended — matches the reference site)
+## Deploy to Vercel
 1. Push this folder to a GitHub repo.
 2. Go to https://vercel.com → **Add New → Project** → import the repo.
 3. Vercel auto-detects Vite (settings already in `vercel.json`). Click **Deploy**.
@@ -40,18 +39,11 @@ Netlify / GitHub Pages / Cloudflare Pages work too — just serve the `dist/` fo
 
 ## Editing your content
 All content lives in plain data at the top of the components — no CMS needed:
-- **`src/components/Sidebar.jsx`** — name, tagline, social links, résumé button.
-- **`src/components/MainContent.jsx`** — about, skills, projects, experience,
-  education, certifications, contact (edit the `skills`, `projects`, `experience`,
-  `certifications` arrays).
-- **`public/Karan_Bisht_Resume.pdf`** — replace to update the résumé download.
+- **`index.html`** — page title, meta description and Open Graph tags.
+- **`src/components/Hero.jsx`** — headline, tagline and social links.
+- **`src/components/MainContent.jsx`** — about, stats, experience, projects,
+  education, achievements and contact (edit the `stats`, `projects`,
+  `experience` and `certifications` arrays).
+- **`src/components/Journey.jsx`**, **`SkillShuffle.jsx`**, **`Marquee.jsx`** —
+  journey timeline, skill cards and scrolling keywords.
 - Colors and theme tokens live in `src/index.css` (`:root`).
-
-## Adding your photo
-Drop a square image at `src/assets/karan.png`, then in `Sidebar.jsx` replace the
-`<div className="avatar">…</div>` block with:
-```jsx
-import karan from '../assets/karan.png'
-// ...
-<img className="avatar" src={karan} alt="Karan Bisht" />
-```

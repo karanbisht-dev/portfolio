@@ -5,20 +5,19 @@ import CountUp from './CountUp'
 import Scramble from './Scramble'
 
 const stats = [
-  { value: '8.20', label: 'CGPA / 10' },
-  { value: '300+', label: 'DSA solved' },
-  { value: 'Top 3', label: 'AWS Jam / 500+' },
+  { value: '8.23', label: 'CGPA / 10' },
   { value: '2', label: 'Internships' },
+  { value: 'Top 3', label: 'AWS Jam / 500+' },
+  { value: 'PPO', label: 'Accenture' },
 ]
 
 const projects = [
   {
-    title: 'Customer Relationship Management (CRM) System',
-    tag: 'Full-Stack · 2026',
-    stack: ['Node.js', 'Express.js', 'MongoDB', 'Mongoose', 'REST API'],
+    title: 'CRM Backend',
+    tag: 'Backend · 2026',
+    stack: ['Node.js', 'Express.js', 'MongoDB', 'Postman'],
     points: [
-      'Built a full-stack CRM on the MEN stack (MongoDB, Express.js, Node.js) with MVC architecture for managing customer records and business workflows.',
-      'Architected 15+ RESTful API endpoints with full CRUD, input validation, Mongoose ODM schema design, structured JSON responses and error handling.',
+      'REST API to add, view, update and delete customer records, with input validation and error handling; tested with Postman.',
     ],
     link: 'https://github.com/karanbisht-dev',
   },
@@ -28,34 +27,37 @@ const experience = [
   {
     role: 'Custom Software Engineering Associate Intern',
     org: 'Accenture',
-    period: 'May 2026 – Present',
-    location: 'Chennai, India',
+    period: 'May 2026 – Jul 2026',
+    location: 'Chennai',
+    context: 'Teradata-to-Snowflake data warehouse migration for an enterprise client.',
     points: [
-      'Built an AI-assisted, human-in-the-loop Teradata→Snowflake SQL remediation tool (Python, Claude via Snowflake Cortex) across 4 healthcare data pipelines (~1,000 lines/script, PII data).',
-      'Engineered a complete Snowflake test environment from scratch — 35+ tables and 7 stub PII-tokenization UDFs — by reverse-engineering scripts with no reference database.',
-      'Developed a variable-resolution pre-processor that eliminated &{VAR} token failures blocking 100% of scripts; catalogued 9 severity-ranked migration issue classes.',
-      'Implemented Snowflake zero-copy cloning with iteration caps and token cost guardrails; reviewed 50+ SQL scripts for schema compatibility, data integrity and crash-safe audit trails.',
+      'Repaired auto-converted Teradata-to-Snowflake ETL scripts using a Python tool where an LLM (Claude) proposes each fix and an engineer approves it; every attempt ran on a zero-copy clone, not production data.',
+      'Traced why every converted script failed on line 1 (unresolved placeholders) and built a Python pre-processor that resolves them before execution.',
+      'Fixed a SQL statement-splitter bug that cut BEGIN…END blocks at inner semicolons and caused false syntax errors; the 2 main data-load scripts then ran cleanly.',
+      'Cut a missing-table check from 38 flagged tables to the 4 truly missing, then created those 4.',
+      'Added a rule-based (non-LLM) fix for column aliases in WHERE clauses; reported 2 bugs from a code review and wrote the technical handover report.',
     ],
   },
   {
-    role: 'Research Intern — Large Language Models & Multi-Agent AI',
-    org: 'IIT Patna',
-    period: 'Jun 2026 – Present',
+    role: 'Research Intern, LLM Multi-Agent Systems',
+    org: 'IIT Patna (NPTEL)',
+    period: 'Jun 2026 – Jul 2026',
     location: 'Remote',
+    context: 'EduPlanner++: extending an IEEE TLT 2025 multi-agent lesson planner (guide: Dr. Rajiv Misra).',
     points: [
-      'Analyzed EduPlanner (IEEE TLT 2025), identified 5 research gaps, and wrote Python integrating Dynamic Knowledge Tracing, a 3-LLM ensemble evaluator and SymPy-based math verification into the existing multi-agent framework.',
-      'Reviewed and synthesized 30+ peer-reviewed papers on LLMs and multi-agent systems to validate proposed framework improvements.',
+      'Replaced a fixed student profile with Deep Knowledge Tracing (LSTM); on 200 simulated students, weak-topic detection F1 rose from 0.41 to 0.78 and mastery error halved (0.28 to 0.14).',
+      'Showed the LLM judge scored correct and wrong maths examples almost the same (55.0 vs 55.9); added a verifier where SymPy re-solves each equation alongside an LLM check.',
+      'Replaced one LLM judge with 3 from different model families and measured their disagreement.',
+      'Added API-key rotation and retries for HTTP 429 rate limits so long experiments completed.',
     ],
   },
 ]
 
 const certifications = [
-  'AWS Jam — Top 3 out of 500+ participants (cloud architecture competition)',
-  'Solved 300+ DSA problems on LeetCode & GeeksforGeeks',
-  'Selected as sole campus candidate for the Accenture CSE Associate Intern role',
-  'Selected for research internship at IIT Patna (Institute of National Importance)',
-  'AWS Certified Cloud Practitioner (Foundational)',
-  'NPTEL — Cloud Computing · NCC B Certificate',
+  'Pre-placement offer (PPO) from Accenture for the Advanced Associate Software Engineer role.',
+  'Topped an NPTEL exam, earning selection for the IIT Patna research internship.',
+  'AWS Jam: Top 3 out of 500+ participants.',
+  'NPTEL Cloud Computing certificate.',
 ]
 
 function Section({ id, title, children }) {
@@ -75,12 +77,12 @@ export default function MainContent() {
       <Section id="about" num="01" title="About">
         <p className="prose big" data-reveal="up">
           I&apos;m a final-year B.Tech Computer Science &amp; Engineering student
-          at Graphic Era Hill University (graduating May 2027). I&apos;m an intern
-          at <strong>Accenture</strong>, where I built an AI-assisted SQL migration
-          remediation tool for enterprise healthcare pipelines, and a research
-          intern at <strong>IIT Patna</strong> working on LLMs and multi-agent AI.
-          I&apos;m proficient in Python, SQL, Node.js and REST APIs — and I love
-          turning messy, real-world problems into clean software that ships.
+          at Graphic Era Hill University (CGPA 8.23, graduating Jul 2027) with two
+          internships applying LLMs to real engineering problems: an
+          LLM-assisted Teradata-to-Snowflake SQL migration at
+          <strong> Accenture</strong> and an LLM multi-agent research project at
+          <strong> IIT Patna</strong>. I&apos;m interested in software
+          development, AI/ML and test automation.
         </p>
 
         <div className="stats">
@@ -109,6 +111,7 @@ export default function MainContent() {
                 <h3>{e.role} · <span className="org">{e.org}</span></h3>
                 <span className="period">{e.period} · {e.location}</span>
               </div>
+              {e.context && <p className="prose small-note">{e.context}</p>}
               <ul>
                 {e.points.map((pt, j) => <li key={j}>{pt}</li>)}
               </ul>
@@ -151,14 +154,10 @@ export default function MainContent() {
         <div className="timeline-item tilt glow-card" data-reveal="up">
           <div className="timeline-head">
             <h3>B.Tech, Computer Science &amp; Engineering</h3>
-            <span className="period">Aug 2023 – May 2027 (Expected)</span>
+            <span className="period">Aug 2023 – Jul 2027</span>
           </div>
           <p className="prose">
-            Graphic Era Hill University, Bhimtal, Uttarakhand · CGPA: 8.20 / 10
-          </p>
-          <p className="prose small-note">
-            Coursework: DSA, OOP, DBMS, Operating Systems, Computer Networks,
-            Machine Learning, Cloud Computing.
+            Graphic Era Hill University, Bhimtal, Uttarakhand · CGPA: 8.23 / 10
           </p>
         </div>
       </Section>
@@ -173,13 +172,12 @@ export default function MainContent() {
 
       <Section id="contact" num="08" title="Contact">
         <p className="prose big" data-reveal="up">
-          I&apos;m open to software engineering roles, internships and interesting
+          I&apos;m open to software engineering roles and interesting
           collaborations. The fastest way to reach me:
         </p>
         <div className="contact-links" data-reveal="up" style={{ '--d': '0.1s' }}>
           <a className="magnetic glow-card" data-magnetic="0.25" href="mailto:karan.bisht.work@gmail.com">karan.bisht.work@gmail.com</a>
-          <a className="magnetic glow-card" data-magnetic="0.25" href="tel:+918392898312">+91 83928 98312</a>
-          <a className="magnetic glow-card" data-magnetic="0.25" href="https://linkedin.com/in/karanbisht-cse" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+          <a className="magnetic glow-card" data-magnetic="0.25" href="https://www.linkedin.com/in/karanbisht-cse" target="_blank" rel="noopener noreferrer">LinkedIn</a>
           <a className="magnetic glow-card" data-magnetic="0.25" href="https://github.com/karanbisht-dev" target="_blank" rel="noopener noreferrer">GitHub</a>
         </div>
       </Section>

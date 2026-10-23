@@ -3,18 +3,16 @@ import './Marquee.css'
 // Kinetic-typography strip that scrolls the things I work with. The list is
 // duplicated so a -50% translate loops seamlessly; it pauses on hover.
 const WORDS = [
-  'Backend',
-  'Cloud',
-  'Artificial Intelligence',
+  'C++',
+  'JavaScript',
   'Python',
-  'AWS',
-  'Node.js',
-  'LLMs',
-  'REST APIs',
-  'Problem Solving',
-  'Distributed Systems',
   'SQL',
-  'Multi-Agent AI',
+  'LLMs',
+  'Multi-Agent Systems',
+  'LLM Evaluation',
+  'MongoDB',
+  'AWS Basics',
+  'Test Automation',
 ]
 
 export default function Marquee() {
